@@ -2,7 +2,7 @@
 
 autoload -Uz promptinit
 promptinit
-prompt adam1
+prompt bart
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -v #<-- ACTUALLY using vi instead
