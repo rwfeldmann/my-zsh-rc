@@ -5,7 +5,7 @@ promptinit
 prompt adam1
 
 # Use emacs keybindings even if our EDITOR is set to vi
-bindkey -v
+bindkey -v #<-- ACTUALLY using vi instead
 #bindkey -e
 
 # Set history options
@@ -75,7 +75,10 @@ clean_old_snaps() {
 # Function to check disk space and alert if free space is below 10%
 check_disk_space() {
     # Get disk usage details, filtering out filesystems like tmpfs and others typically not monitored
-    df -h --exclude-type=tmpfs --exclude-type=devtmpfs | awk 'NR>1 {if ($5+0 >= 90) print $0}'
+    df -h --exclude-type=tmpfs \
+    --exclude-type=devtmpfs \
+    --exclude-type=fuse.snapfuse \
+    --exclude-type=iso9660 | awk 'NR>1 {if ($5+0 >= 90) print $0}'
 }
 
 check_disk_space_alert() {
@@ -97,10 +100,25 @@ check_and_set_manpager() {
     fi
 }
 
+check_ssh_agent() {
+    if command -v ssh-agent &> /dev/null; then
+        # If there is no running ssh-agent, start one
+        if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &> /dev/null; then
+            eval "$(ssh-agent -s)" > /dev/null
+            echo "Started ssh-agent."
+        else
+            echo "ssh-agent is already running."
+        fi
+    else
+        echo "ssh-agent not found."
+        return 1
+    fi
+}
+
 # Call the custom functions
-check_disk_space_alert
+check_ssh_agent
 check_and_set_manpager
+check_disk_space_alert
 
 # Export useful variables
 export PATH="$HOME/.cargo/bin:$PATH"
-
