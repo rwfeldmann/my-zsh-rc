@@ -1,21 +1,18 @@
 # Set up the prompt
 
+#Setup oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="agnoster" #robbyrussell
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
+PROMPT='%F{cyan}%n@%m %F{blue}%~ %F{yellow}$(git_prompt_info)%f$ '
+ZSH_COLORIZE_STYLE="default"
+ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
+
 autoload -Uz promptinit
 promptinit
-#prompt suse
-
-# Set color variables
-autoload -U colors && colors
-BLACK_FG="%F{black}"      # Black foreground
-PALE_YELLOW_BG="%K{229}"  # Pale yellow background (229 in 256-color palette)
-RESET_FG="%f"             # Reset foreground
-RESET_BG="%k"             # Reset background
-
-# Configure the prompt
-PROMPT='${PALE_YELLOW_BG}${BLACK_FG}%n@%m: ${RESET_FG}${RESET_BG} %~/ > '
-
-# Optional: Enable prompt substitution
-setopt PROMPT_SUBST
+#prompt suse #default is adam1
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -v #<-- ACTUALLY using vi instead
