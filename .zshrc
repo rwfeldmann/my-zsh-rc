@@ -2,7 +2,20 @@
 
 autoload -Uz promptinit
 promptinit
-prompt suse
+#prompt suse
+
+# Set color variables
+autoload -U colors && colors
+BLACK_FG="%F{black}"      # Black foreground
+PALE_YELLOW_BG="%K{229}"  # Pale yellow background (229 in 256-color palette)
+RESET_FG="%f"             # Reset foreground
+RESET_BG="%k"             # Reset background
+
+# Configure the prompt
+PROMPT='${PALE_YELLOW_BG}${BLACK_FG}%n@%m: ${RESET_FG}${RESET_BG} %~/ > '
+
+# Optional: Enable prompt substitution
+setopt PROMPT_SUBST
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -v #<-- ACTUALLY using vi instead
