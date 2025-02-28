@@ -100,7 +100,44 @@ check_and_set_manpager() {
     fi
 }
 
+# Add this to your ~/.zshrc file
+
+ssh-agent-start() {
+    # Check if ssh-agent is already running
+    if [ -n "$SSH_AUTH_SOCK" ] && [ -S "$SSH_AUTH_SOCK" ]; then
+        echo "Using existing ssh-agent (PID: $SSH_AGENT_PID)"
+        return 0
+    fi
+
+    # Check for ssh-agent socket in default location
+    if [ -f ~/.ssh/ssh-agent-env ]; then
+        . ~/.ssh/ssh-agent-env > /dev/null
+        # Verify if the agent is still running
+        if ps -p $SSH_AGENT_PID > /dev/null 2>&1; then
+            echo "Connected to existing ssh-agent (PID: $SSH_AGENT_PID)"
+            export SSH_AUTH_SOCK SSH_AGENT_PID
+            return 0
+        else
+            # Clean up stale env file
+            rm -f ~/.ssh/ssh-agent-env
+        fi
+    fi
+
+    # Start new ssh-agent if no existing one found
+    echo "Starting new ssh-agent..."
+    ssh-agent > ~/.ssh/ssh-agent-env
+    . ~/.ssh/ssh-agent-env > /dev/null
+    echo "New ssh-agent started (PID: $SSH_AGENT_PID)"
+    
+    # Add your default SSH key(s) - uncomment and modify as needed
+    # ssh-add ~/.ssh/id_rsa
+    
+    export SSH_AUTH_SOCK SSH_AGENT_PID
+    return 0
+}
+
 # Call the custom functions
+ssh-agent-start
 check_and_set_manpager
 check_disk_space_alert
 
