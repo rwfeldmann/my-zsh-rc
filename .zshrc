@@ -2,7 +2,7 @@
 
 autoload -Uz promptinit
 promptinit
-prompt bart
+prompt suse
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -v #<-- ACTUALLY using vi instead
@@ -100,23 +100,7 @@ check_and_set_manpager() {
     fi
 }
 
-check_ssh_agent() {
-    if command -v ssh-agent &> /dev/null; then
-        # If there is no running ssh-agent, start one
-        if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &> /dev/null; then
-            eval "$(ssh-agent -s)" > /dev/null
-            echo "Started ssh-agent."
-        else
-            echo "ssh-agent is already running."
-        fi
-    else
-        echo "ssh-agent not found."
-        return 1
-    fi
-}
-
 # Call the custom functions
-check_ssh_agent
 check_and_set_manpager
 check_disk_space_alert
 
