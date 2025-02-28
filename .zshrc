@@ -113,6 +113,12 @@ check_and_set_manpager() {
 # Add this to your ~/.zshrc file
 
 ssh-agent-start() {
+    # Check for .nosshagent file first
+    if [ -f ~/.nosshagent ]; then
+        echo ".nosshagent file found - skipping ssh-agent setup"
+        return 0
+    fi
+
     # Check if ssh-agent is already running
     if [ -n "$SSH_AUTH_SOCK" ] && [ -S "$SSH_AUTH_SOCK" ]; then
         echo "Using existing ssh-agent (PID: $SSH_AGENT_PID)"
