@@ -1,25 +1,25 @@
 # Set up the prompt
 
-#Setup oh-my-zsh
+# Setup oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
+# Setup the prompt
 PROMPT='%F{cyan}%n@%m %F{blue}%~ %F{yellow}$(git_prompt_info)%f$ '
 ZSH_COLORIZE_STYLE="default"
 ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
 
+# Autoload some other prompt stuff
 autoload -Uz promptinit
 promptinit
 #prompt suse #default is adam1
 
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -v #<-- ACTUALLY using vi instead
-#bindkey -e
+# Use vi keybindings in zsh
+bindkey -v
 
 # Set history options
-#####################
 HISTSIZE=1000
 SAVEHIST=5000
 HISTFILE=~/.zsh_history
@@ -65,16 +65,13 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# Alias definitions
-###################
+# ALIAS DEFINITIONS
 
 [[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
 
-# CUSTOM FUNCTIONS HERE
-#######################
+# CUSTOM FUNCTIONS
 
-# Removes old revisions of snaps
-# CLOSE ALL SNAPS BEFORE RUNNING THIS
+# Removes old revisions of snaps, CLOSE ALL SNAPS BEFORE RUNNING THIS
 clean_old_snaps() {
     set -eu
     LANG=en_US.UTF-8 snap list --all | awk '/disabled/{print $1, $3}' | while read -r snapname revision; do
@@ -102,6 +99,7 @@ check_disk_space_alert() {
     fi
 }
 
+# Use neovim as the MANPAGER
 check_and_set_manpager() {
     if command -v nvim &>/dev/null; then
         export MANPAGER='nvim +Man!'
@@ -111,8 +109,8 @@ check_and_set_manpager() {
     fi
 }
 
-# Add this to your ~/.zshrc file
-
+# Check for existence of already running ssh-agent and use it,
+# otherwise start a new instance
 ssh-agent-start() {
     # Check for .nosshagent file first
     if [ -f ~/.nosshagent ]; then
@@ -158,7 +156,7 @@ ssh-agent-start
 check_and_set_manpager
 check_disk_space_alert
 
-# Check for existence of Rust and its package manager and add to path
+# Check for existence of Rust and its package manager and add to PATH
 # if it exists, otherwise just use the good old PATH
 if [[ -d ~/.cargo ]]; then
 	export PATH="$HOME/.cargo/bin:$PATH"
