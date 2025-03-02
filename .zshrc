@@ -89,7 +89,7 @@ check_disk_space() {
     --exclude-type=devtmpfs \
     --exclude-type=fuse.snapfuse \
     --exclude-type=iso9660 \
-    --exclude=type=squashfs | awk 'NR>1 {if ($5+0 >= 90) print $0}'
+    --exclude-type=squashfs | awk 'NR>1 {if ($5+0 >= 90) print $0}'
 }
 
 check_disk_space_alert() {
@@ -158,5 +158,10 @@ ssh-agent-start
 check_and_set_manpager
 check_disk_space_alert
 
-# Export useful variables
-export PATH="$HOME/.cargo/bin:$PATH"
+# Check for existence of Rust and its package manager and add to path
+# if it exists, otherwise just use the good old PATH
+if [[ -d ~/.cargo ]]; then
+	export PATH="$HOME/.cargo/bin:$PATH"
+else
+	export PATH=$PATH
+fi
