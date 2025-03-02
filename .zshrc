@@ -88,7 +88,8 @@ check_disk_space() {
     df -h --exclude-type=tmpfs \
     --exclude-type=devtmpfs \
     --exclude-type=fuse.snapfuse \
-    --exclude-type=iso9660 | awk 'NR>1 {if ($5+0 >= 90) print $0}'
+    --exclude-type=iso9660 \
+    --exclude=type=squashfs | awk 'NR>1 {if ($5+0 >= 90) print $0}'
 }
 
 check_disk_space_alert() {
