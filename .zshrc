@@ -8,7 +8,9 @@ source $ZSH/oh-my-zsh.sh
 # get from: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Setup the prompt
-PROMPT='%F{cyan}%n@%m %F{blue}%~ %F{yellow}$(git_prompt_info)%f$ '
+# Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
+NEWLINE=$'\n'
+PROMPT='%F{cyan}%n@%m %F{blue}%~ %F{yellow}$(git_prompt_info)%f${NEWLINE}> '
 ZSH_COLORIZE_STYLE="default"
 ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
 
