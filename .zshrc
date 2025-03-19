@@ -10,7 +10,8 @@ source $ZSH/oh-my-zsh.sh
 # Setup the prompt
 # Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
 NEWLINE=$'\n'
-PROMPT='%F{cyan}%n@%m %F{blue}%~ %F{yellow}$(git_prompt_info)%f${NEWLINE}> '
+ZSHVERSION=`echo $SHELL | rev | cut -d/ -f1 | rev`
+PROMPT='%F{cyan}%n@%m (${ZSHVERSION}) %F{blue}%~ %F{yellow}$(git_prompt_info)%f${NEWLINE}> '
 ZSH_COLORIZE_STYLE="default"
 ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
 
