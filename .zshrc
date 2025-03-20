@@ -7,11 +7,14 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 # get from: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+# Needed for blinking cursor?
+_zsh_cursor() { echo -ne '\e[1 q' }
+precmd_functions+=_zsh_cursor
+
 # Setup the prompt
 # Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
 NEWLINE=$'\n'
-ZSHVERSION=`echo $SHELL | rev | cut -d/ -f1 | rev`
-PROMPT='%F{cyan}%n@%m (${ZSHVERSION}) %F{blue}%~ %F{yellow}$(git_prompt_info)%f${NEWLINE}> '
+PROMPT='%F{cyan}%n@%m %F{blue}%~ %F{yellow}$(git_prompt_info)%f${NEWLINE}> '
 ZSH_COLORIZE_STYLE="default"
 ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
 
@@ -159,6 +162,7 @@ ssh-agent-start() {
 ssh-agent-start
 check_and_set_manpager
 check_disk_space_alert
+
 
 # Check for existence of Rust and its package manager and add to PATH
 # if it exists, otherwise just use the good old PATH
