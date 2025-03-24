@@ -118,7 +118,7 @@ check_and_set_manpager() {
 
 # Check for existence of already running ssh-agent and use it,
 # otherwise start a new instance
-ssh-agent-start() {
+ssh_agent_start() {
     # Check for .nosshagent file first
     if [ -f ~/.nosshagent ]; then
         echo ".nosshagent file found - skipping ssh-agent setup"
@@ -159,10 +159,9 @@ ssh-agent-start() {
 }
 
 # Call the custom functions
-ssh-agent-start
+ssh_agent_start
 check_and_set_manpager
 check_disk_space_alert
-
 
 # Check for existence of Rust and its package manager and add to PATH
 # if it exists, otherwise just use the good old PATH
