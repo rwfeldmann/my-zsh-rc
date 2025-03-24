@@ -1,11 +1,9 @@
-# Set up the prompt
-
 # Setup oh-my-zsh
+# get from: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
-# get from: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Needed for blinking cursor?
 _zsh_cursor() { echo -ne '\e[1 q' }
