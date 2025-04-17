@@ -12,7 +12,7 @@ precmd_functions+=_zsh_cursor
 # Setup the prompt
 # Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
 NEWLINE=$'\n'
-PROMPT='%F{cyan}%n@%m %F{blue}%~ %F{yellow}$(git_prompt_info)%f${NEWLINE}> '
+PROMPT='%F{cyan}%n@%m %F{blue} %F{yellow}$(git_prompt_info)%f${NEWLINE}%~ > '
 ZSH_COLORIZE_STYLE="default"
 ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
 
