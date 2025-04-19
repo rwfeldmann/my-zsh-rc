@@ -10,16 +10,15 @@ _zsh_cursor() { echo -ne '\e[1 q' }
 precmd_functions+=_zsh_cursor
 
 # Setup the prompt
-# Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
+# 1. Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
 NEWLINE=$'\n'
-PROMPT='%F{cyan}%n@%m %F{blue} %F{yellow}$(git_prompt_info)%f${NEWLINE}%~ > '
-ZSH_COLORIZE_STYLE="default"
-ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
+PROMPT='%F{cyan}%n@%m %F{yellow}$(git_prompt_info) %F{white}${NEWLINE} ~ > %f'
+#ZSH_COLORIZE_STYLE="default"
+#ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
 
 # Autoload some other prompt stuff
 autoload -Uz promptinit
 promptinit
-#prompt suse #default is adam1
 
 # Use vi keybindings in zsh
 bindkey -v
