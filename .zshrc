@@ -12,9 +12,7 @@ precmd_functions+=_zsh_cursor
 # Setup the prompt
 # 1. Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
 NEWLINE=$'\n'
-PROMPT='%F{cyan}%n@%m %F{yellow}$(git_prompt_info) %F{white}${NEWLINE} ~ > %f'
-#ZSH_COLORIZE_STYLE="default"
-#ZSH_COLORIZE_CHARS="blue,yellow,cyan,white"
+PROMPT='%F{cyan}%n@%m [$(tty)] %F{yellow}$(git_prompt_info) %F{white}${NEWLINE} ~ > %f'
 
 # Autoload some other prompt stuff
 autoload -Uz promptinit
@@ -115,7 +113,7 @@ check_and_set_manpager() {
 
 # Check for existence of already running ssh-agent and use it,
 # otherwise start a new instance
-ssh_agent_start() {
+f_ssh_agent_start() {
     # Check for .nosshagent file first
     if [ -f ~/.nosshagent ]; then
         echo ".nosshagent file found - skipping ssh-agent setup"
@@ -156,7 +154,7 @@ ssh_agent_start() {
 }
 
 # Call the custom functions
-ssh_agent_start
+f_ssh_agent_start
 check_and_set_manpager
 check_disk_space_alert
 
@@ -167,3 +165,4 @@ if [[ -d ~/.cargo ]]; then
 else
 	export PATH=$PATH
 fi
+
