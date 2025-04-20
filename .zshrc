@@ -12,7 +12,7 @@ precmd_functions+=_zsh_cursor
 # Setup the prompt
 # 1. Added a newline to the prompt just to have some fun and see if it makes it more 'user friendly'
 NEWLINE=$'\n'
-PROMPT='%F{cyan}%n@%m [$(tty)] %F{yellow}$(git_prompt_info) %F{white}${NEWLINE} ~ > %f'
+PROMPT='%F{cyan}%n@%m [$(tty)] %F{yellow}$(git_prompt_info) %F{white}${NEWLINE} %~ > %f'
 
 # Autoload some other prompt stuff
 autoload -Uz promptinit
