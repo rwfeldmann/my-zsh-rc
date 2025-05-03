@@ -1,7 +1,7 @@
 # Setup oh-my-zsh
 # get from: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="agnoster"
+ZSH_THEME=""
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
@@ -74,7 +74,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # CUSTOM FUNCTIONS
 
 # Removes old revisions of snaps, CLOSE ALL SNAPS BEFORE RUNNING THIS
-clean_old_snaps() {
+f_clean_old_snaps() {
     set -eu
     LANG=en_US.UTF-8 snap list --all | awk '/disabled/{print $1, $3}' | while read -r snapname revision; do
         snap remove "$snapname" --revision="$revision"
@@ -82,7 +82,7 @@ clean_old_snaps() {
 }
 
 # Function to check disk space and alert if free space is below 10%
-check_disk_space() {
+f_check_disk_space() {
     # Get disk usage details, filtering out filesystems like tmpfs and others typically not monitored
     df -h --exclude-type=tmpfs \
     --exclude-type=devtmpfs \
@@ -91,9 +91,9 @@ check_disk_space() {
     --exclude-type=squashfs | awk 'NR>1 {if ($5+0 >= 90) print $0}'
 }
 
-check_disk_space_alert() {
+f_check_disk_space_alert() {
     local low_space
-    low_space=$(check_disk_space)
+    low_space=$(f_check_disk_space)
 
     if [[ -n "$low_space" ]]; then
         echo -e "\e[33;1mWARNING: Low disk space detected on the following filesystems:\e[0m"
@@ -102,7 +102,7 @@ check_disk_space_alert() {
 }
 
 # Use neovim as the MANPAGER
-check_and_set_manpager() {
+f_check_and_set_manpager() {
     if command -v nvim &>/dev/null; then
         export MANPAGER='nvim +Man!'
         echo -e "\e[36mnvim detected. MANPAGER set to use nvim.\e[0m"
@@ -145,24 +145,24 @@ f_ssh_agent_start() {
     ssh-agent > ~/.ssh/ssh-agent-env
     . ~/.ssh/ssh-agent-env > /dev/null
     echo "New ssh-agent started (PID: $SSH_AGENT_PID)"
-    
+
     # Add your default SSH key(s) - uncomment and modify as needed
     # ssh-add ~/.ssh/id_rsa
-    
+
     export SSH_AUTH_SOCK SSH_AGENT_PID
     return 0
 }
 
 # Call the custom functions
 f_ssh_agent_start
-check_and_set_manpager
-check_disk_space_alert
+f_check_and_set_manpager
+f_check_disk_space_alert
 
 # Check for existence of Rust and its package manager and add to PATH
 # if it exists, otherwise just use the good old PATH
 if [[ -d ~/.cargo ]]; then
-	export PATH="$HOME/.cargo/bin:$PATH"
+        export PATH="$HOME/.cargo/bin:$PATH"
 else
-	export PATH=$PATH
+        export PATH=$PATH
 fi
 
