@@ -1,2 +1,2 @@
 # zsh-rc
-My zsh rc
+My customized zsh rc
