@@ -40,6 +40,7 @@ setopt INC_APPEND_HISTORY   # Immediately add commands to history, instead of wa
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
+# install the 'xterm' package for the following to work
 autoload -Uz zsh/terminfo
 zle -N adjustwinsize
 adjustwinsize() { eval "$(resize)" }
